@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         val spannableString = SpannableString(fullText) //Создаем SpannableString
 
 
-        val confidentialClickable = object : ClickableSpan() {
+      /*  val confidentialClickable = object : ClickableSpan() {
             override fun onClick(p0: View) {
                 Snackbar.make(p0, "Go to Link", Snackbar.LENGTH_SHORT).show()
             }
@@ -55,7 +55,15 @@ class MainActivity : AppCompatActivity() {
                 ds.color = Color.parseColor("#FF0000")
             }
 
+        }*/
+
+        val confidentialClickable = MyClickableSpan(){
+            Snackbar.make(it,"Go to link", Snackbar.LENGTH_SHORT).show()
         }
+        val policyClickable = MyClickableSpan{
+            Snackbar.make(it,"Go to link2",Snackbar.LENGTH_SHORT).show()
+        }
+
         spannableString.setSpan(
             confidentialClickable,
             fullText.indexOf(confidential),
@@ -74,8 +82,11 @@ class MainActivity : AppCompatActivity() {
             movementMethod = LinkMovementMethod.getInstance()
             highlightColor = Color.TRANSPARENT
         }
+
     }
 }
+
+
 
 fun TextView.setColor(@ColorRes colorResId: Int, theme: Resources.Theme? = null) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
