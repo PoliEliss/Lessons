@@ -7,10 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
-import android.text.TextPaint
 import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import android.view.View
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import com.google.android.material.snackbar.Snackbar
