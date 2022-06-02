@@ -6,5 +6,7 @@
     <string name="confidential_info">agreement</string>
     <string name="privacy_policy">privacy policy</string>
     <string name="candy">candy</string>
+    <string name="login">login</string>
+    <string name="invalid_email_message">Некоректный email адрес</string>
 
 </resources>
