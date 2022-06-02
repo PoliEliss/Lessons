@@ -8,5 +8,7 @@
     <string name="candy">candy</string>
     <string name="login">login</string>
     <string name="invalid_email_message">Некоректный email адрес</string>
+    <string name="agreement_full_texts">I agree with terms of use privacy policy</string>
+    <string name="i_agree">I agree</string>
 
 </resources>

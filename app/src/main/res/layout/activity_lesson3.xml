@@ -35,11 +35,18 @@
          android:layout_height="0dp"
          android:layout_weight="1"/>
 
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="match_parent"
+        android:buttonTint="@color/teal_200"
+        android:layout_margin="@dimen/padding_small"
+        android:text="@string/agreement_full_texts"
+        android:layout_height="wrap_content"/>
+
     <Button
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
         android:text="@string/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
