@@ -5,5 +5,6 @@
     and privacy policy </string>
     <string name="confidential_info">agreement</string>
     <string name="privacy_policy">privacy policy</string>
+    <string name="candy">candy</string>
 
 </resources>

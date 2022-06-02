@@ -7,8 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
+import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.ColorRes
 import com.google.android.material.snackbar.Snackbar
 
@@ -28,6 +30,13 @@ class MainActivity : AppCompatActivity() {
 
         val spannableString = SpannableString(fullText) //Создаем SpannableString
 
+        agreementTextView.setOnClickListener{
+            agreementTextView.run {
+                text = spannableString
+                movementMethod = LinkMovementMethod.getInstance()
+                highlightColor = Color.BLUE
+            }
+        }
 
       /*  val confidentialClickable = object : ClickableSpan() {
             override fun onClick(p0: View) {
