@@ -18,6 +18,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        savedInstanceState?.let {
+
+        }
         val titleTextView = findViewById<TextView>(R.id.titleTextView)
         val string = "This is title from code!"
         titleTextView.text = string
@@ -89,6 +92,10 @@ class MainActivity : AppCompatActivity() {
             highlightColor = Color.TRANSPARENT
         }
 
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
     }
 }
 

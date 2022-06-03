@@ -24,9 +24,24 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 class Lesson3 : AppCompatActivity() {
+
+    private companion object {
+        const val INITIAL = 0
+        const val PROGRESS = 1
+        const val SUCCESS = 2
+        const val FAILED = 3
+        private var state = INITIAL
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lesson3)
+        Log.d("TEST", "onCreste ${savedInstanceState == null}")
+        savedInstanceState?.let {
+            state = it.getInt("screenState")
+        }
+        Log.d("TEST", "state is ${state}")
+
 
         val textInputLayout = findViewById<TextInputLayout>(R.id.textInputLayout)
         val textInputEditText = textInputLayout.editText as TextInputEditText
@@ -60,6 +75,33 @@ class Lesson3 : AppCompatActivity() {
             loginButton.isEnabled = true
         }
 
+        textInputEditText.addTextChangedListener(object : SimpleTextWatcher() {
+            override fun afterTextChanged(s: Editable?) {
+                val input = s.toString()
+                val valid = android.util.Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()
+                textInputLayout.isErrorEnabled = !valid
+                val error = if (valid) "" else getString(R.string.invalid_email_message)
+                textInputLayout.error = error
+                if (valid) Toast.makeText(
+                    this@Lesson3,
+                    "Правильный e-mail адрес",
+                    Toast.LENGTH_LONG
+                ).show()
+                if (input.endsWith("@g")) {
+                    val fullMail = "${input}mail.com"
+                    textInputEditText.setTextCorrectly(fullMail)
+                }
+            }
+        })
+        val contentLayout = findViewById<ViewGroup>(R.id.contentLayout)
+
+        when (state) {
+            FAILED -> showDailog(contentLayout = contentLayout)
+            SUCCESS -> {
+                Snackbar.make(contentLayout,"Success",Snackbar.LENGTH_SHORT).show()
+            }
+        }
+
         val progressBar = findViewById<View>(R.id.progressBar)
         loginButton.setOnClickListener {
             if (android.util.Patterns.EMAIL_ADDRESS.matcher(textInputEditText.text.toString())
@@ -67,22 +109,17 @@ class Lesson3 : AppCompatActivity() {
             ) {
                 hideMyKeyBoard()
                 loginButton.isEnabled = false
-                val contentLayout = findViewById<ViewGroup>(R.id.contentLayout)
+
                 contentLayout.visibility = View.GONE
                 progressBar.visibility = View.VISIBLE
-                Snackbar.make(loginButton, "Go to postLogin", Snackbar.LENGTH_SHORT).show()
+                state = PROGRESS
+                Log.d("TEST", "stateProgress ${state}")
+
                 Handler(Looper.myLooper()!!).postDelayed({
+                    state = FAILED
                     contentLayout.visibility = View.VISIBLE
                     progressBar.visibility = View.GONE
-                    val dialog = Dialog(this)
-                    val view =
-                        LayoutInflater.from(this).inflate(R.layout.dialog, contentLayout, false)
-                    dialog.setCancelable(false)
-                    view.findViewById<View>(R.id.closeButton).setOnClickListener {
-                        dialog.dismiss()
-                    }
-                    dialog.setContentView(view)
-                    dialog.show()
+
 
                 }, 3000)
             }
@@ -106,32 +143,41 @@ class Lesson3 : AppCompatActivity() {
 
         }
 
-        /*  textInputEditText.addTextChangedListener(object : SimpleTextWatcher() {
-              override fun afterTextChanged(s: Editable?) {
-                  val input = s.toString()
-                  val valid = android.util.Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()
-                  textInputLayout.isErrorEnabled = !valid
-                  val error = if (valid)"" else getString(R.string.invalid_email_message)
-                  textInputLayout.error = error
-                  if (valid) Toast.makeText(
-                      this@Lesson3,
-                      "Правильный e-mail адрес",
-                      Toast.LENGTH_LONG
-                  ).show()
-                  if (input.endsWith("@g")){
-                      val fullMail = "${input}mail.com"
-                      textInputEditText.setTextCorrectly(fullMail)
-                  }
+        /*textInputEditText.addTextChangedListener(object : SimpleTextWatcher() {
+            override fun afterTextChanged(s: Editable?) {
+                val input = s.toString()
+                val valid = android.util.Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()
+                textInputLayout.isErrorEnabled = !valid
+                val error = if (valid)"" else getString(R.string.invalid_email_message)
+                textInputLayout.error = error
+                if (valid) Toast.makeText(
+                    this@Lesson3,
+                    "Правильный e-mail адрес",
+                    Toast.LENGTH_LONG
+                ).show()
+                if (input.endsWith("@g")){
+                    val fullMail = "${input}mail.com"
+                    textInputEditText.setTextCorrectly(fullMail)
+                }
 
-              }
-          })
-      }*/
+            }
+        })
+    }*/
 
-        fun TextInputEditText.setTextCorrectly(text: CharSequence) {
-            setText(text)
-            setSelection(text.length)
+
+    }
+
+    private fun showDailog(contentLayout: ViewGroup) {
+        val dialog = Dialog(this)
+        val view =
+            LayoutInflater.from(this).inflate(R.layout.dialog, contentLayout, false)
+        dialog.setCancelable(false)
+        view.findViewById<View>(R.id.closeButton).setOnClickListener {
+            state = INITIAL
+            dialog.dismiss()
         }
-
+        dialog.setContentView(view)
+        dialog.show()
 
     }
 
@@ -152,4 +198,15 @@ class Lesson3 : AppCompatActivity() {
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         }
     }
+
+    fun TextInputEditText.setTextCorrectly(text: CharSequence) {
+        setText(text)
+        setSelection(text.length)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("screenState", state)
+    }
+
 }
