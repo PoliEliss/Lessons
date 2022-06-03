@@ -10,5 +10,8 @@
     <string name="invalid_email_message">Некоректный email адрес</string>
     <string name="agreement_full_texts">I agree with terms of use privacy policy</string>
     <string name="i_agree">I agree</string>
+    <string name="attention">Внимание!!!</string>
+    <string name="service_is_unavailable">Сервис временно недоступен</string>
+    <string name="close">close</string>
 
 </resources>

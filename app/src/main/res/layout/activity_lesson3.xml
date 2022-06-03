@@ -8,13 +8,16 @@
     android:gravity="center"
     android:orientation="vertical">
 
-
+<LinearLayout
+    android:id="@+id/contentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/textInputLayout"
         android:layout_width="match_parent"
         android:layout_margin="10dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:hint="@string/login"
         app:expandedHintEnabled="false"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,32 +29,36 @@
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress|textMultiLine"
             tools:layout_editor_absoluteX="-16dp"
-            tools:layout_editor_absoluteY="155dp" />
+            tools:layout_editor_absoluteY="155dp"/>
+
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="match_parent"
+            android:buttonTint="@color/teal_200"
+            android:layout_margin="@dimen/padding_small"
+            android:text="@string/agreement_full_texts"
+            android:layout_height="wrap_content"/>
+           <Space
+               android:layout_width="match_parent"
+               android:layout_height="0dp"
+               android:layout_weight="1"/>
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />/>
     </com.google.android.material.textfield.TextInputLayout>
+</LinearLayout>
 
-
-     <Space
-         android:layout_width="match_parent"
+     <ProgressBar
+         android:id="@+id/progressBar"
+         android:layout_width="wrap_content"
          android:layout_height="0dp"
+         android:layout_gravity="center"
+         android:visibility="gone"
          android:layout_weight="1"/>
-
-    <CheckBox
-        android:id="@+id/checkbox"
-        android:layout_width="match_parent"
-        android:buttonTint="@color/teal_200"
-        android:layout_margin="@dimen/padding_small"
-        android:text="@string/agreement_full_texts"
-        android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/loginButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/login"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
-
-
 </LinearLayout>

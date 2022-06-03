@@ -1,20 +1,24 @@
 package com.rorono.lessons
 
+import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
-import android.view.Window
-import android.view.WindowManager
+import android.util.Log
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.Toast
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -56,20 +60,47 @@ class Lesson3 : AppCompatActivity() {
             loginButton.isEnabled = true
         }
 
-      /*  loginButton.setOnClickListener {
+        val progressBar = findViewById<View>(R.id.progressBar)
+        loginButton.setOnClickListener {
             if (android.util.Patterns.EMAIL_ADDRESS.matcher(textInputEditText.text.toString())
                     .matches()
             ) {
-                loginButton.isEnabled = false
                 hideMyKeyBoard()
-
+                loginButton.isEnabled = false
+                val contentLayout = findViewById<ViewGroup>(R.id.contentLayout)
+                contentLayout.visibility = View.GONE
+                progressBar.visibility = View.VISIBLE
                 Snackbar.make(loginButton, "Go to postLogin", Snackbar.LENGTH_SHORT).show()
+                Handler(Looper.myLooper()!!).postDelayed({
+                    contentLayout.visibility = View.VISIBLE
+                    progressBar.visibility = View.GONE
+                    val dialog = Dialog(this)
+                    val view =
+                        LayoutInflater.from(this).inflate(R.layout.dialog, contentLayout, false)
+                    dialog.setCancelable(false)
+                    view.findViewById<View>(R.id.closeButton).setOnClickListener {
+                        dialog.dismiss()
+                    }
+                    dialog.setContentView(view)
+                    dialog.show()
 
-            } else {
-                textInputLayout.isErrorEnabled = true
-                textInputLayout.error = getString(R.string.invalid_email_message)
+                }, 3000)
             }
-        }*/
+        }
+        /*  loginButton.setOnClickListener {
+              if (android.util.Patterns.EMAIL_ADDRESS.matcher(textInputEditText.text.toString())
+                      .matches()
+              ) {
+                  loginButton.isEnabled = false
+                  hideMyKeyBoard()
+
+                  Snackbar.make(loginButton, "Go to postLogin", Snackbar.LENGTH_SHORT).show()
+
+              } else {
+                  textInputLayout.isErrorEnabled = true
+                  textInputLayout.error = getString(R.string.invalid_email_message)
+              }
+          }*/
         textInputEditText.listenChanges {
             textInputLayout.isErrorEnabled = false
 
