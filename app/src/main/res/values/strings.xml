@@ -13,5 +13,6 @@
     <string name="attention">Внимание!!!</string>
     <string name="service_is_unavailable">Сервис временно недоступен</string>
     <string name="close">close</string>
+    <string name="send">SEND</string>
 
 </resources>
