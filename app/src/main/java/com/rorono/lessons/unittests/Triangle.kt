@@ -9,7 +9,11 @@ class Triangle(private val sideA: Int, private val sideB: Int, private val sideC
         if (sideA <= 0 || sideB <= 0 || sideC <= 0) {
             throw IllegalArgumentException("triangle sides cannot be not-positive")
         }
+        if (sideA + sideB <= sideC || sideB + sideC <= sideA || sideA + sideC <= sideB){
+            throw IllegalArgumentException("triangle sides cannot be not-positive")
+        }
     }
+
 
     fun isRightTriangle(): Boolean {
         return sideA.square() + sideB.square() == sideC.square() ||

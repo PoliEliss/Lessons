@@ -3,16 +3,16 @@ package com.rorono.lessons
 import android.util.Log
 import java.util.*
 
-class Model(private val dataSource: DataSource) {
+class Model(private val dataSource: DataSource, private val timeTicker: TimeTicker) {
 
 
-    private var timer: Timer? = null
-    private val timerTask = object : TimerTask() {
-        override fun run() {
-            count++
-            callback?.updateText(count.toString())
+    private val tickerCallback
+        get() = object : TimeTicker.Callback {
+            override fun tick() {
+                count++
+                callback?.updateText(count.toString())
+            }
         }
-    }
     private var callback: TextCallback? = null
     private var count = -1
 
@@ -21,19 +21,15 @@ class Model(private val dataSource: DataSource) {
         callback = textCallback
         if (count < 0)
             count = dataSource.getInt(COUNTER_KEY)
-        timer = Timer()
-        timer?.scheduleAtFixedRate(timerTask, 1000, 1000)
+        timeTicker?.start(tickerCallback)
     }
 
     fun stop() {
-        timer = null
         dataSource.saveInt(COUNTER_KEY, count)
-        timer?.cancel()
-        timer = null
+        timeTicker.stop()
     }
 
     companion object {
         private const val COUNTER_KEY = "counterKey"
-        private const val TAG = "uniqueCounterTag"
     }
 }

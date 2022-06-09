@@ -11,7 +11,7 @@ class Lesson5 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lesson5)
-        viewModel = (application as MyApplication).viewModel
+        viewModel = ViewModel(Model(CacheDataSource(this),TimerTicker()))
 
         val textView = findViewById<TextView>(R.id.view)
         val observable = TextObservable()

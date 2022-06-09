@@ -21,4 +21,12 @@ class TriangleTest {
         val expected = false
         assertEquals(expected,actual)
     }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun test_invalid_triangle(){
+        val triangle = Triangle(1,2,3)
+        val actual = triangle.isRightTriangle()
+        val expected = false
+        assertEquals(expected,actual)
+    }
 }

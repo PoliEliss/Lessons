@@ -18,10 +18,12 @@ class ViewModel(private val model: Model) {
     fun clear() {
         textObservable = null
     }
-    fun resumeCounting(){
+
+    fun resumeCounting() {
         model.start(textCallback)
     }
-    fun pauseCounting(){
+
+    fun pauseCounting() {
         model.stop()
     }
 
@@ -40,6 +42,8 @@ class TextObservable {
 
     }
 }
+
+
 
 interface TextCallback {
     fun updateText(str: String)
